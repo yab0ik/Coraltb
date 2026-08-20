@@ -1,6 +1,7 @@
 import { Box, Center, Circle, Flex, HStack, IconButton, Link, Stack, Text} from "@chakra-ui/react";
 import { Tooltip } from "./components/ui/tooltip";
 import { ExploreGPTIcon, NewChatIcon, SidebarIcon, SmallGPTIcon, UpgradeIcon } from "./icons/sidebar-icons";
+import MenuComponent from "./components/coralMenu";
 
 
 function App() {
@@ -91,7 +92,7 @@ function App() {
       </Box>
       <Box>
         <Stack h="full">
-          <Box>Top</Box>
+          <Box><MenuComponent /></Box>
           <Center flex="1">Middle</Center>
           <Box pb="2">Bottom</Box>
         </Stack>
