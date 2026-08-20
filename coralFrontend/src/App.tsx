@@ -1,6 +1,6 @@
 import { Box, Center, Circle, Flex, HStack, IconButton, Link, Stack, Text} from "@chakra-ui/react";
 import { Tooltip } from "./components/ui/tooltip";
-import { ExploreGPTIcon, NewChatIcon, SidebarIcon, SmallGPTIcon } from "./icons/sidebar-icons";
+import { ExploreGPTIcon, NewChatIcon, SidebarIcon, SmallGPTIcon, UpgradeIcon } from "./icons/sidebar-icons";
 
 
 function App() {
@@ -24,8 +24,14 @@ function App() {
               </IconButton>
             </Tooltip>
           </Flex>
-          <Stack>
-            <HStack px="2">
+          <Stack px="2" gap="0" flex="1">
+            <HStack
+              _hover={{ layerStyle: "fill.muted", textDecoration: "none" }}
+              px="1"
+              h="10"
+              borderRadius="lg"
+              w="100%"
+            >
               <Link
                 href="#"
                 variant="plain"
@@ -34,21 +40,53 @@ function App() {
                 <Circle size="6" bg="bg" borderWidth="1px">
                   <SmallGPTIcon fontSize="md" />
                 </Circle>
-                <Text>CoralTB</Text>
+                <Text fontSize="sm">CoralTB</Text>
               </Link>
             </HStack>
 
-            <HStack>
+            <HStack
+              _hover={{ layerStyle: "fill.muted", textDecoration: "none" }}
+              px="1"
+              h="10"
+              borderRadius="lg"
+              w="100%"
+            >
               <Link
                 href="#"
                 variant="plain"
                 _hover={{ textDecoration: "none" }}
               >
                 <ExploreGPTIcon fontSize="md" />
-                <Text>Explore CoralTB</Text>
+                <Text fontSize="sm" fontWeight="md">
+                  Explore CoralTB
+                </Text>
               </Link>
             </HStack>
           </Stack>
+          <Link
+            href="#"
+            _hover={{
+              textDecoration: "none",
+              layerStyle: "fill.muted",
+              borderRadius: "lg",
+            }}
+            px="1"
+            py="2"
+          >
+            <HStack>
+              <Circle size="8" fontSize="lg" borderWidth="1px">
+                <UpgradeIcon />
+              </Circle>
+              <Stack gap="0" align="start" fontWeight="medium">
+                <Text fontSize="sm" fontWeight="md">
+                  Upgrade plan
+                </Text>
+                <Text fontSize="xs" color="fg.subtle">
+                  Access to all plans
+                </Text>
+              </Stack>
+            </HStack>
+          </Link>
         </Stack>
       </Box>
       <Box>
