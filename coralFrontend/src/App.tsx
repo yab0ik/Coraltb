@@ -1,8 +1,24 @@
-import { Box, Center, Circle, Flex, HStack, IconButton, Link, Stack, Text} from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Center,
+  Circle,
+  Flex,
+  HStack,
+  IconButton,
+  Link,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { Tooltip } from "./components/ui/tooltip";
-import { ExploreGPTIcon, NewChatIcon, SidebarIcon, SmallGPTIcon, UpgradeIcon } from "./icons/sidebar-icons";
+import {
+  ExploreGPTIcon,
+  NewChatIcon,
+  SidebarIcon,
+  SmallGPTIcon,
+  UpgradeIcon,
+} from "./icons/sidebar-icons";
 import MenuComponent from "./components/coralMenu";
-
 
 function App() {
   return (
@@ -90,9 +106,14 @@ function App() {
           </Link>
         </Stack>
       </Box>
-      <Box>
+      <Box flex="1">
         <Stack h="full">
-          <Box><MenuComponent /></Box>
+          <Flex justify="space-between" align="center" p="2">
+            <MenuComponent />
+            <Avatar.Root size="sm" colorPalette="purple" variant ="solid" mr="3">
+              <Avatar.Fallback name="K" />
+            </Avatar.Root>
+          </Flex>
           <Center flex="1">Middle</Center>
           <Box pb="2">Bottom</Box>
         </Stack>

@@ -1,4 +1,4 @@
-import { ChatGPTPlusIcon } from "@/icons/other-icons";
+import { ChatGPTPlusIcon, MenuIcon } from "@/icons/other-icons";
 import {
   Box,
   Button,
@@ -19,11 +19,15 @@ interface MenuItemDetailProps {
 function MenuItemDetail(props: MenuItemDetailProps) {
   const { icon, title, description, element } = props;
   return (
-    <HStack>
-      <Circle size="8">{icon}</Circle>
-      <Stack gap="0">
+    <HStack w="100%">
+      <Circle size="8" bg="bg.subtle">
+        {icon}
+      </Circle>
+      <Stack gap="0" flex="1" align="start">
         <Text>{title}</Text>
-        <Text fontSize="xs">{description}</Text>
+        <Text fontSize="xs" color="fg.muted">
+          {description}
+        </Text>
       </Stack>
       <Box>{element}</Box>
     </HStack>
@@ -33,20 +37,25 @@ const MenuComponent = () => {
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
-        <Button variant="outline" size="sm">
-          CoralTB
+        <Button
+          variant="ghost"
+          fontSize="lg"
+          fontWeight="bold"
+          color="fg.muted"
+        >
+          CoralTB <MenuIcon />
         </Button>
       </Menu.Trigger>
       <Portal>
         <Menu.Positioner>
-          <Menu.Content>
-            <Menu.Item value="new-txt">
+          <Menu.Content minW= '320px' borderRadius = '2xl'>
+            <Menu.Item value="CoralTB plus" py='2'>
               <MenuItemDetail
                 icon={<ChatGPTPlusIcon boxSize="4" />}
                 title="CoralTB plus"
-                description="Better models"
+                description="Better models for your needs"
                 element={
-                  <Button variant="outline" size="sm" borderRadius="full">
+                  <Button variant="outline" size="xs" borderRadius="full">
                     Upgrade
                   </Button>
                 }
