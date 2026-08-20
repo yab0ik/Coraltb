@@ -44,7 +44,7 @@ export function SmallGPTIcon(props: IconProps) {
 export function ExploreGPTIcon(props: IconProps) {
   return (
     <Icon viewBox="0 0 24 24" fill="none" {...props}>
-      <svg>
+      <svg viewBox="0 0 24 24" width="1em" height="1em">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
