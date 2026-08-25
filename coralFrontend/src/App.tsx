@@ -1,169 +1,18 @@
-import {
-  Avatar,
-  Box,
-  Center,
-  Circle,
-  FileUpload,
-  Flex,
-  Heading,
-  HStack,
-  IconButton,
-  Input,
-  InputGroup,
-  Link,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { Tooltip } from "./components/ui/tooltip";
-import {
-  ExploreGPTIcon,
-  NewChatIcon,
-  SidebarIcon,
-  SmallGPTIcon,
-  UpgradeIcon,
-} from "./icons/sidebar-icons";
-import MenuComponent from "./components/coralMenu";
-import { UploadIcon } from "./icons/other-icons";
+import { Box, Flex, Stack } from "@chakra-ui/react";
+import AppFooter from "./components/AppFooter";
+import AppHeader from "./components/AppHeader";
+import LandingPage from "./components/LandingPage";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
     <Flex minH="100dvh">
-      <Box bg="bg.muted" w="260px" display={{ base: "none", md: "block" }}>
-        <Stack h="full" px="3" py="2">
-          <Flex justify="space-between">
-            <Tooltip
-              content="Sidebar"
-              positioning={{ placement: "right" }}
-              showArrow
-            >
-              <IconButton variant="ghost">
-                <SidebarIcon fontSize="2xl" color="fg.muted" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip content="New Chat" showArrow>
-              <IconButton variant="ghost">
-                <NewChatIcon fontSize="2xl" color="fg.muted" />
-              </IconButton>
-            </Tooltip>
-          </Flex>
-          <Stack px="2" gap="0" flex="1">
-            <HStack
-              _hover={{ layerStyle: "fill.muted", textDecoration: "none" }}
-              px="1"
-              h="10"
-              borderRadius="lg"
-              w="100%"
-            >
-              <Link
-                href="#"
-                variant="plain"
-                _hover={{ textDecoration: "none" }}
-              >
-                <Circle size="6" bg="bg" borderWidth="1px">
-                  <SmallGPTIcon fontSize="md" />
-                </Circle>
-                <Text fontSize="sm">CoralTB</Text>
-              </Link>
-            </HStack>
-
-            <HStack
-              _hover={{ layerStyle: "fill.muted", textDecoration: "none" }}
-              px="1"
-              h="10"
-              borderRadius="lg"
-              w="100%"
-            >
-              <Link
-                href="#"
-                variant="plain"
-                _hover={{ textDecoration: "none" }}
-              >
-                <ExploreGPTIcon fontSize="md" />
-                <Text fontSize="sm" fontWeight="md">
-                  Explore CoralTB
-                </Text>
-              </Link>
-            </HStack>
-          </Stack>
-          <Link
-            href="#"
-            _hover={{
-              textDecoration: "none",
-              layerStyle: "fill.muted",
-              borderRadius: "lg",
-            }}
-            px="1"
-            py="2"
-          >
-            <HStack>
-              <Circle size="8" fontSize="lg" borderWidth="1px">
-                <UpgradeIcon />
-              </Circle>
-              <Stack gap="0" align="start" fontWeight="medium">
-                <Text fontSize="sm" fontWeight="md">
-                  Upgrade plan
-                </Text>
-                <Text fontSize="xs" color="fg.subtle">
-                  Access to all plans
-                </Text>
-              </Stack>
-            </HStack>
-          </Link>
-        </Stack>
-      </Box>
+      <Sidebar />
       <Box flex="1" minW="0">
         <Stack h="full">
-          <Flex justify="space-between" align="center" p="2">
-            <MenuComponent />
-            <Avatar.Root size="sm" colorPalette="purple" variant="solid" mr="3">
-              <Avatar.Fallback name="K" />
-            </Avatar.Root>
-          </Flex>
-          <Center flex="1" w="full" px={{ base: "2", sm: "4" }}>
-            <VStack w="full" gap="4">
-              <Heading size={{ base: "xl", sm: "3xl" }} textAlign="center">
-                What can I help you with today?
-              </Heading>
-              <FileUpload.Root maxFiles={5} w="70%" mx="auto">
-                <FileUpload.HiddenInput />
-                <InputGroup
-                  w="full"
-                  startElementProps={{ pointerEvents: "auto" }}
-                  startElement={
-                    <Tooltip content="Upload files" showArrow openDelay={0}>
-                      <Box display="inline-flex">
-                        <FileUpload.Trigger asChild>
-                          <IconButton
-                            aria-label="Upload files"
-                            title="Upload files"
-                            variant="ghost"
-                            size="sm"
-                          >
-                            <UploadIcon fontSize="2xl" />
-                          </IconButton>
-                        </FileUpload.Trigger>
-                      </Box>
-                    </Tooltip>
-                  }
-                >
-                  <Input
-                    placeholder="Type your message here..."
-                    size="lg"
-                    w="full"
-                    variant="subtle"
-                    borderRadius="3xl"
-                  />
-                </InputGroup>
-                <Box w="full" mt="2">
-                  <FileUpload.List showSize clearable />
-                </Box>
-              </FileUpload.Root>
-            </VStack>
-          </Center>
-          <Box pb="2">
-            CoralTB can make mistakes. Please verify important information.
-          </Box>
+          <AppHeader />
+          <LandingPage />
+          <AppFooter />
         </Stack>
       </Box>
     </Flex>
