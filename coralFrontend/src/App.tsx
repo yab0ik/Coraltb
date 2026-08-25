@@ -127,19 +127,26 @@ function App() {
               </Heading>
               <Center w="full">
                 <InputGroup
-                  w="full"
+                  w="70%"
+                  mx="auto"
+                  startElementProps={{ pointerEvents: "auto" }}
                   startElement={
                     <FileUpload.Root maxFiles={5}>
                       <FileUpload.HiddenInput />
-                      <FileUpload.Trigger asChild>
-                        <IconButton
-                          aria-label="Upload files"
-                          variant="ghost"
-                          size="sm"
-                        >
-                          <UploadIcon fontSize="2xl" />
-                        </IconButton>
-                      </FileUpload.Trigger>
+                      <Tooltip content="Upload files" showArrow openDelay={0}>
+                        <Box display="inline-flex">
+                          <FileUpload.Trigger asChild>
+                            <IconButton
+                              aria-label="Upload files"
+                              title="Upload files"
+                              variant="ghost"
+                              size="sm"
+                            >
+                              <UploadIcon fontSize="2xl" />
+                            </IconButton>
+                          </FileUpload.Trigger>
+                        </Box>
+                      </Tooltip>
                       <FileUpload.List showSize clearable />
                     </FileUpload.Root>
                   }
@@ -147,7 +154,7 @@ function App() {
                   <Input
                     placeholder="Type your message here..."
                     size="lg"
-                    w="100%"
+                    w="full"
                     variant="subtle"
                     borderRadius="3xl"
                   />
@@ -155,7 +162,9 @@ function App() {
               </Center>
             </VStack>
           </Center>
-          <Box pb="2">Bottom</Box>
+          <Box pb="2">
+            CoralTB can make mistakes. Please verify important information.
+          </Box>
         </Stack>
       </Box>
     </Flex>
