@@ -12,25 +12,25 @@ import { Tooltip } from "./ui/tooltip";
 import {
   ExploreGPTIcon,
   NewChatIcon,
-  SidebarIcon,
   SmallGPTIcon,
   UpgradeIcon,
 } from "../icons/sidebar-icons";
 
-function Sidebar() {
+interface SidebarProps {
+  readonly isOpen: boolean;
+}
+
+function Sidebar({ isOpen }: SidebarProps) {
   return (
-    <Box bg="bg.muted" w="260px" display={{ base: "none", md: "block" }}>
+    <Box
+      bg="bg.muted"
+      w={{ base: isOpen ? "260px" : "0", md: isOpen ? "260px" : "0" }}
+      overflow="hidden"
+      flexShrink="0"
+      transition="width 0.2s ease"
+    >
       <Stack h="full" px="3" py="2">
         <Flex justify="space-between">
-          <Tooltip
-            content="Sidebar"
-            positioning={{ placement: "right" }}
-            showArrow
-          >
-            <IconButton variant="ghost">
-              <SidebarIcon fontSize="2xl" color="fg.muted" />
-            </IconButton>
-          </Tooltip>
           <Tooltip content="New Chat" showArrow>
             <IconButton variant="ghost">
               <NewChatIcon fontSize="2xl" color="fg.muted" />
