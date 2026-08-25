@@ -125,30 +125,26 @@ function App() {
               <Heading size={{ base: "xl", sm: "3xl" }} textAlign="center">
                 What can I help you with today?
               </Heading>
-              <Center w="full">
+              <FileUpload.Root maxFiles={5} w="70%" mx="auto">
+                <FileUpload.HiddenInput />
                 <InputGroup
-                  w="70%"
-                  mx="auto"
+                  w="full"
                   startElementProps={{ pointerEvents: "auto" }}
                   startElement={
-                    <FileUpload.Root maxFiles={5}>
-                      <FileUpload.HiddenInput />
-                      <Tooltip content="Upload files" showArrow openDelay={0}>
-                        <Box display="inline-flex">
-                          <FileUpload.Trigger asChild>
-                            <IconButton
-                              aria-label="Upload files"
-                              title="Upload files"
-                              variant="ghost"
-                              size="sm"
-                            >
-                              <UploadIcon fontSize="2xl" />
-                            </IconButton>
-                          </FileUpload.Trigger>
-                        </Box>
-                      </Tooltip>
-                      <FileUpload.List showSize clearable />
-                    </FileUpload.Root>
+                    <Tooltip content="Upload files" showArrow openDelay={0}>
+                      <Box display="inline-flex">
+                        <FileUpload.Trigger asChild>
+                          <IconButton
+                            aria-label="Upload files"
+                            title="Upload files"
+                            variant="ghost"
+                            size="sm"
+                          >
+                            <UploadIcon fontSize="2xl" />
+                          </IconButton>
+                        </FileUpload.Trigger>
+                      </Box>
+                    </Tooltip>
                   }
                 >
                   <Input
@@ -159,7 +155,10 @@ function App() {
                     borderRadius="3xl"
                   />
                 </InputGroup>
-              </Center>
+                <Box w="full" mt="2">
+                  <FileUpload.List showSize clearable />
+                </Box>
+              </FileUpload.Root>
             </VStack>
           </Center>
           <Box pb="2">
