@@ -12,20 +12,17 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { type SubmitEvent, useState } from "react";
+import type { ChatSession } from "../chat/types";
 import { Tooltip } from "./ui/tooltip";
 import { EnterIcon, UploadIcon } from "../icons/other-icons";
 
-interface ChatMessage {
-  readonly id: number;
-  readonly role: "user" | "assistant";
-  readonly content: string;
+interface LandingPageProps {
+  readonly chat: ChatSession;
+  readonly onUpdateChat: (updater: (chat: ChatSession) => ChatSession) => void;
 }
 
-function LandingPage() {
+function LandingPage({ chat, onUpdateChat }: LandingPageProps) {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [files, setFiles] = useState<File[]>([]);
-  const [isProjectStarted, setIsProjectStarted] = useState(false);
 
   function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,37 +30,62 @@ function LandingPage() {
 
     if (!content) return;
 
-    setMessages((currentMessages) => [
-      ...currentMessages,
-      { id: Date.now(), role: "user", content },
-      {
-        id: Date.now() + 1,
-        role: "assistant",
-        content: `I received your message: "${content}"`,
-      },
-    ]);
+    onUpdateChat((currentChat) => {
+      const nextMessages = [
+        ...currentChat.messages,
+        { id: Date.now(), role: "user" as const, content },
+        {
+          id: Date.now() + 1,
+          role: "assistant" as const,
+          content: `I received your message: "${content}"`,
+        },
+      ];
+
+      const nextTitle =
+        currentChat.messages.length === 0
+          ? content.slice(0, 36)
+          : currentChat.title;
+
+      return {
+        ...currentChat,
+        title: nextTitle || currentChat.title,
+        messages: nextMessages,
+        updatedAt: Date.now(),
+      };
+    });
+
     setMessage("");
   }
 
   function handleStartAnalysis() {
-    setIsProjectStarted(true);
-    setMessages([
-      {
-        id: Date.now(),
-        role: "assistant",
-        content: `I found ${files.length} project file${files.length === 1 ? "" : "s"}. I am ready to help you understand the design and plan its verification.`,
-      },
-    ]);
+    onUpdateChat((currentChat) => ({
+      ...currentChat,
+      isProjectStarted: true,
+      messages: [
+        {
+          id: Date.now(),
+          role: "assistant",
+          content: `I found ${currentChat.files.length} project file${currentChat.files.length === 1 ? "" : "s"}. I am ready to help you understand the design and plan its verification.`,
+        },
+      ],
+      updatedAt: Date.now(),
+    }));
   }
 
   const composer = (
     <Box w="full" mx="auto">
       <form onSubmit={handleSubmit}>
-          <FileUpload.Root
-            maxFiles={5}
-            w="full"
-            onFileAccept={(details) => setFiles(details.files)}
-          >
+        <FileUpload.Root
+          maxFiles={5}
+          w="full"
+          onFileAccept={(details) =>
+            onUpdateChat((currentChat) => ({
+              ...currentChat,
+              files: details.files,
+              updatedAt: Date.now(),
+            }))
+          }
+        >
           <FileUpload.HiddenInput />
           <InputGroup
             w="full"
@@ -129,11 +151,11 @@ function LandingPage() {
         w="full"
         overflowY="auto"
         display="flex"
-        alignItems={messages.length === 0 ? "center" : "flex-start"}
+        alignItems={chat.messages.length === 0 ? "center" : "flex-start"}
         justifyContent="center"
-        pb={messages.length > 0 ? "6" : "0"}
+        pb={chat.messages.length > 0 ? "6" : "0"}
       >
-        {messages.length === 0 ? (
+        {chat.messages.length === 0 ? (
           <VStack w={{ base: "full", sm: "70%" }} gap="4">
             <VStack gap="1">
               <Heading size={{ base: "xl", sm: "3xl" }} textAlign="center">
@@ -144,7 +166,7 @@ function LandingPage() {
               </Text>
             </VStack>
             {composer}
-            {files.length > 0 && (
+            {chat.files.length > 0 && (
               <Button
                 type="button"
                 colorPalette="purple"
@@ -156,17 +178,18 @@ function LandingPage() {
           </VStack>
         ) : (
           <VStack w={{ base: "full", sm: "70%" }} gap="4" align="stretch">
-            {isProjectStarted && (
+            {chat.isProjectStarted && (
               <Box borderBottomWidth="1px" pb="3">
                 <Text fontSize="sm" fontWeight="bold">
                   Verification workspace
                 </Text>
                 <Text fontSize="xs" color="fg.muted">
-                  {files.length} project file{files.length === 1 ? "" : "s"} ready for analysis
+                  {chat.files.length} project file
+                  {chat.files.length === 1 ? "" : "s"} ready for analysis
                 </Text>
               </Box>
             )}
-            {messages.map((chatMessage) => (
+            {chat.messages.map((chatMessage) => (
               <Box
                 key={chatMessage.id}
                 alignSelf={
@@ -185,7 +208,7 @@ function LandingPage() {
                 <Text>{chatMessage.content}</Text>
               </Box>
             ))}
-            {isProjectStarted && (
+            {chat.isProjectStarted && (
               <VStack align="stretch" gap="2" pt="2">
                 <Text fontSize="sm" fontWeight="bold">
                   Recommended next steps
@@ -195,14 +218,19 @@ function LandingPage() {
                     size="sm"
                     variant="outline"
                     onClick={() =>
-                      setMessages((currentMessages) => [
-                        ...currentMessages,
-                        {
-                          id: Date.now(),
-                          role: "assistant",
-                          content: "I will inspect the RTL modules, interfaces, clocks, and resets next.",
-                        },
-                      ])
+                      onUpdateChat((currentChat) => ({
+                        ...currentChat,
+                        messages: [
+                          ...currentChat.messages,
+                          {
+                            id: Date.now(),
+                            role: "assistant",
+                            content:
+                              "I will inspect the RTL modules, interfaces, clocks, and resets next.",
+                          },
+                        ],
+                        updatedAt: Date.now(),
+                      }))
                     }
                   >
                     Analyze RTL
@@ -211,14 +239,19 @@ function LandingPage() {
                     size="sm"
                     variant="outline"
                     onClick={() =>
-                      setMessages((currentMessages) => [
-                        ...currentMessages,
-                        {
-                          id: Date.now(),
-                          role: "assistant",
-                          content: "I will turn the project requirements into a verification plan next.",
-                        },
-                      ])
+                      onUpdateChat((currentChat) => ({
+                        ...currentChat,
+                        messages: [
+                          ...currentChat.messages,
+                          {
+                            id: Date.now(),
+                            role: "assistant",
+                            content:
+                              "I will turn the project requirements into a verification plan next.",
+                          },
+                        ],
+                        updatedAt: Date.now(),
+                      }))
                     }
                   >
                     Create verification plan
@@ -229,7 +262,7 @@ function LandingPage() {
           </VStack>
         )}
       </Box>
-      {messages.length > 0 && composer}
+      {chat.messages.length > 0 && composer}
     </Flex>
   );
 }
