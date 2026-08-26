@@ -1,4 +1,11 @@
-import { Avatar, Box, Button, Flex, HStack, IconButton } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  HStack,
+  IconButton,
+} from "@chakra-ui/react";
 import type { GoogleUser } from "../auth/useGoogleAuth";
 import { Tooltip } from "./ui/tooltip";
 import MenuComponent from "./coralMenu";
@@ -11,7 +18,12 @@ interface AppHeaderProps {
   onSignOut: () => void;
 }
 
-function AppHeader({ isSidebarOpen, onToggleSidebar, user, onSignOut }: AppHeaderProps) {
+function AppHeader({
+  isSidebarOpen,
+  onToggleSidebar,
+  user,
+  onSignOut,
+}: AppHeaderProps) {
   return (
     <Flex justify="space-between" align="center" p="2">
       <HStack>

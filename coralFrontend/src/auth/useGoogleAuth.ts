@@ -64,7 +64,10 @@ function decodeGoogleJwtPayload(token: string): GoogleJwtPayload | null {
     const jsonPayload = decodeURIComponent(
       atob(normalized)
         .split("")
-        .map((character) => `%${(`00${character.charCodeAt(0).toString(16)}`).slice(-2)}`)
+        .map(
+          (character) =>
+            `%${`00${character.charCodeAt(0).toString(16)}`.slice(-2)}`,
+        )
         .join(""),
     );
 
@@ -132,7 +135,10 @@ export function useGoogleAuth() {
 
     if (existingScript) {
       if (window.google) setupGoogleSignIn();
-      else existingScript.addEventListener("load", setupGoogleSignIn, { once: true });
+      else
+        existingScript.addEventListener("load", setupGoogleSignIn, {
+          once: true,
+        });
       return;
     }
 
