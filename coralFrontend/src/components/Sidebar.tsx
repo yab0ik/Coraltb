@@ -3,6 +3,7 @@ import {
   Circle,
   Flex,
   HStack,
+  Image,
   IconButton,
   Link,
   Stack,
@@ -12,9 +13,9 @@ import { Tooltip } from "./ui/tooltip";
 import {
   ExploreGPTIcon,
   NewChatIcon,
-  SmallGPTIcon,
   UpgradeIcon,
 } from "../icons/sidebar-icons";
+import coralIcon from "@/assets/a-circular-logo-that-has-a-coral-but-there-is-like.png";
 
 interface SidebarProps {
   readonly isOpen: boolean;
@@ -47,7 +48,13 @@ function Sidebar({ isOpen }: SidebarProps) {
           >
             <Link href="#" variant="plain" _hover={{ textDecoration: "none" }}>
               <Circle size="6" bg="bg" borderWidth="1px">
-                <SmallGPTIcon fontSize="md" />
+                <Image
+                  src={coralIcon}
+                  alt="CoralTB icon"
+                  boxSize="5"
+                  borderRadius="full"
+                  objectFit="cover"
+                />
               </Circle>
               <Text fontSize="sm">CoralTB</Text>
             </Link>

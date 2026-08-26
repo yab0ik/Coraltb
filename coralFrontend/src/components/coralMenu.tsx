@@ -1,9 +1,11 @@
-import { ChatGPTPlusIcon, MenuIcon } from "@/icons/other-icons";
+import coralIcon from "@/assets/a-circular-logo-that-has-a-coral-but-there-is-like.png";
+import { MenuIcon } from "@/icons/other-icons";
 import {
   Box,
   Button,
   Circle,
   HStack,
+  Image,
   Menu,
   Portal,
   Stack,
@@ -43,15 +45,31 @@ const MenuComponent = () => {
           fontWeight="bold"
           color="fg.muted"
         >
+          <Image
+            src={coralIcon}
+            alt="CoralTB icon"
+            boxSize="7"
+            borderRadius="full"
+            objectFit="cover"
+            mr="2"
+          />
           CoralTB <MenuIcon />
         </Button>
       </Menu.Trigger>
       <Portal>
         <Menu.Positioner>
-          <Menu.Content minW= '320px' borderRadius = '2xl'>
-            <Menu.Item value="CoralTB plus" py='2'>
+          <Menu.Content minW="320px" borderRadius="2xl">
+            <Menu.Item value="CoralTB plus" py="2">
               <MenuItemDetail
-                icon={<ChatGPTPlusIcon boxSize="4" />}
+                icon={
+                  <Image
+                    src={coralIcon}
+                    alt="CoralTB icon"
+                    boxSize="4"
+                    borderRadius="full"
+                    objectFit="cover"
+                  />
+                }
                 title="CoralTB plus"
                 description="Better models for your needs"
                 element={
